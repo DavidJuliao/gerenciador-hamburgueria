@@ -2,6 +2,7 @@ package com.example.hamburgueria.gerenciadorhamburgueria.model.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 
@@ -9,6 +10,7 @@ import java.math.BigDecimal;
 @Table(name = "tb_ham")
 public class Produto {
 
+    @Id
     @Column(name = "id")
     private Long id;
 
@@ -40,6 +42,11 @@ public class Produto {
 
     public void setValor(BigDecimal valor) {
         this.valor = valor;
+    }
+
+    public void atualizar(Produto produto){
+        this.nome = produto.getNome();
+        this.valor = produto.getValor();
     }
 
     @Override

@@ -6,6 +6,8 @@ import com.example.hamburgueria.gerenciadorhamburgueria.model.repository.Produto
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Transient;
+
 @Service
 public class ProdutoService {
 
@@ -16,6 +18,7 @@ public class ProdutoService {
         this.produtoRepository = produtoRepository;
     }
 
+    @Transient
     public void salvarProduto(Produto produto){
 
         produtoRepository.save(produto);
@@ -23,5 +26,18 @@ public class ProdutoService {
 
     public Produto buscarPorId(Long id) throws ProdutoNaoEncontradoException {
         return produtoRepository.findById(id).orElseThrow(ProdutoNaoEncontradoException::new);
+    }
+
+    @Transient
+    public void deletarProduto(Long id) {
+        produtoRepository.deleteById(id);
+    }
+
+    @Transient
+    public void atualizar(Produto produto) throws ProdutoNaoEncontradoException {
+        Produto produtoSalvo = produtoRepository.findById(produto.getId()).orElseThrow(ProdutoNaoEncontradoException::new);
+        produtoSalvo.atualizar(produto);
+        produtoRepository.save(produtoSalvo);
+
     }
 }

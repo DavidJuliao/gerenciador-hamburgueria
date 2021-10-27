@@ -4,7 +4,6 @@ import com.example.hamburgueria.gerenciadorhamburgueria.exceptions.ProdutoNaoEnc
 import com.example.hamburgueria.gerenciadorhamburgueria.model.domain.Produto;
 import com.example.hamburgueria.gerenciadorhamburgueria.model.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,5 +29,17 @@ public class ProdutoController {
     public  ResponseEntity buscarPorId(Long id) throws ProdutoNaoEncontradoException {
         Produto produto = produtoService.buscarPorId(id);
         return produto != null ? ResponseEntity.ok(produto):ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity deletarPorId(Long id){
+        produtoService.deletarProduto(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping
+    public ResponseEntity atualizar(Produto produto) throws ProdutoNaoEncontradoException {
+        produtoService.atualizar(produto);
+        return ResponseEntity.ok().build();
     }
 }
