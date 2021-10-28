@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.Transient;
+import java.util.List;
 
 @Service
 public class ProdutoService {
@@ -20,12 +21,15 @@ public class ProdutoService {
 
     @Transient
     public void salvarProduto(Produto produto){
-
         produtoRepository.save(produto);
     }
 
     public Produto buscarPorId(Long id) throws ProdutoNaoEncontradoException {
         return produtoRepository.findById(id).orElseThrow(ProdutoNaoEncontradoException::new);
+    }
+
+    public List<Produto> buscarTodos() throws ProdutoNaoEncontradoException {
+        return produtoRepository.findAll();
     }
 
     @Transient

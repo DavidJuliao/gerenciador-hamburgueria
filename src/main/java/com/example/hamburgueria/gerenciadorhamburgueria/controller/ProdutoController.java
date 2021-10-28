@@ -31,6 +31,11 @@ public class ProdutoController {
         return produto != null ? ResponseEntity.ok(produto):ResponseEntity.notFound().build();
     }
 
+    @GetMapping
+    public  ResponseEntity buscarTodos() throws ProdutoNaoEncontradoException {
+        return ResponseEntity.ok(produtoService.buscarTodos());
+    }
+
     @DeleteMapping(path = "/{id}")
     public ResponseEntity deletarPorId(Long id){
         produtoService.deletarProduto(id);
